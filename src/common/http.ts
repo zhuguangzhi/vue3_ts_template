@@ -1,7 +1,7 @@
 import { account } from '@/store';
 import axios from 'axios'
-import {message} from "ant-design-vue";
 import router from "@/router";
+import {ElMessage} from "element-plus";
 // 添加请求拦截器，在发送请求之前做些什么(**具体查看axios文档**)--------------------------------------------
 axios.interceptors.request.use(function (config) {
   console.log("请求：",config);
@@ -16,9 +16,8 @@ axios.interceptors.response.use(function (response) {
   // 如果只需要返回体中数据，则如下，如果需要全部，则 return response 即可
   return response.data
 }, (error) => {
-  const errorCode = [401 , 1610 , -1 , -2 , -3 , -4 , -5]
   if (error?.response?.status===401) {
-    message.error('未登录或登录已过期！')
+    ElMessage.error('未登录或登录已过期！')
     router.push('/login')
     return
   }
